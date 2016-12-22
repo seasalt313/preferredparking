@@ -1,0 +1,32 @@
+
+// @import 'node_modules/foundation-sites/scss/foundation';
+@import "buttons";
+@import "cars";
+@import "lots";
+
+// @include foundation-global-styles;
+// @include foundation-grid;
+
+html {
+  background-color: #C99DA3;
+  border: 4px double #F7C4A5;
+  margin: 90px;
+  color: #2A2B2A;
+  font-size: 16px;
+  font-family: 'Quicksand', sans-serif;
+
+  body {
+    padding: 50px;
+
+    ul, h1 {
+      text-align: center;
+    }
+
+    div {
+      border: 2px solid #5E4955;
+      margin: 0 10px;
+      padding: 15px;
+      border-bottom: none;
+    }
+  }
+}
