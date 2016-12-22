@@ -29,6 +29,14 @@ body .listdiv {
   body .listdiv h3 {
     padding: 10px;
     width: 100%; }
+body .parked {
+  padding: 10px;
+  list-style: none;
+  font-size: 22px;
+  margin: 20px;
+  color: black;
+  font-weight: bolder;
+  border: 2px solid grey; }
 
 html {
   background-color: #C99DA3;

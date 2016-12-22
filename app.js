@@ -58,7 +58,7 @@ function init() {
         let button2 = document.createElement("button");
         let button3 = document.createElement("button");
 
-//After creating elements, added event listeners on each button to post for each Lot.
+        //After creating elements, added event listeners on each button to post for each Lot.
 
         const URI = 'https://quiet-reef-60052.herokuapp.com/park';
 
@@ -150,26 +150,49 @@ function init() {
 
 //Wrote GET request to get the information from the heroku url.
 function availableParking() {
+  let array0 = [];
+  let array1 = [];
+  let array2 = [];
+  let array3 = [];
+
     const URI = 'https://quiet-reef-60052.herokuapp.com/lot';
-
     let request = new XMLHttpRequest();
-
     request.open('GET', URI);
 
     request.addEventListener('load', function() {
         let response = JSON.parse(request.responseText);
         console.log(response);
 
-        console.log(response[0].parkedCars.make);
-        console.log(response);
-        showLots(response);
+        for (let i = 0; i < response.length; i++) {
+            let car = response[i].parkedCars;
+            let id = response[i].id
 
-        let car = response[0].parkedCars.make;
+            for (var j = 0; j < car.length; j++) {
+              if (id === 0) {
+                let carName0 = car[j].make + " " + car[j].model;
+                console.log(carName0);
+                array0.push(carName0)
+              } else if (id === 1) {
+                let carName1 = car[j].make + " " + car[j].model;
+                console.log(carName1);
+                array1.push(carName1)
+              } else if (id === 2) {
+                let carName2 = car[j].make + " " + car[j].model;
+                console.log(carName2);
+                array2.push(carName2)
+              } else if (id === 3){
+                let carName3 = car[j].make + " " + car[j].model;
+                console.log(carName3);
+                array3.push(carName3)
+              }
+            }
+        }
+        showLots(response, array0, array1, array2, array3);
 
     });
 
     //Wrote function that is called in the GET function, that will create HTML elements rendering the information I am GETting from backend.
-    function showLots(lot) {
+    function showLots(lot, array0, array1, array2, array3) {
         let list = document.querySelector("ul");
 
         for (let i = 0; i < lot.length; i++) {
@@ -180,43 +203,29 @@ function availableParking() {
             let listdiv = document.createElement("div");
             listdiv.setAttribute("class", "listdiv");
 
-            // let spacesLeft = lot[i].capacity - cars[i].spaces
-
-            lotid.textContent = "Lot #" + lot[i].id;
+            lotid.textContent = lot[i].id;
             capacity.textContent = "Capacity: " + lot[i].capacity + "/" + lot[i].totalSpaces;
             cost.textContent = "Cost: $" + lot[i].rate;
-            name.textContent = "Name of car: " + lot[i].parkedCars[i].make + " " + lot[i].parkedCars[i].model;
+
+            if (lot[i].id === 0) {
+              name.textContent = "Cars: " + array0
+            } else if (lot[i].id === 1) {
+              name.textContent = "Cars: " + array1;
+            } else if (lot[i].id === 2) {
+            name.textContent = "Cars: " + array2;
+          } else if (lot[i].id === 3) {
+            name.textContent = "Cars: " + array3;
+          }
 
             list.appendChild(listdiv);
             listdiv.appendChild(lotid);
             listdiv.appendChild(capacity);
             listdiv.appendChild(cost);
             listdiv.appendChild(name);
-
-            // //trying to loop here to make the names of the cars show...i think i need to push the parked cars to an array and display..
-            // let parkedCars = lot[i].parkedCars;
-            // function parkIt(parkedCars) {
-            //   for (let j = 0; i < parkedCars.length; j++) {
-            //     name.textContent = "Name of car: " + parkedCars[j].make;
-            //   }
-            // }
-            // //calling above function
-            // parkIt(parkedCars);
-
-            //trying to set interval to allow count to update, instead of having to refresh page. I COULD just allow the button to reset the page but thats cheating?
-            // setInterval(function update(){
-            //   capacity.textContent = "Capacity: " + spacesLeft + "/" + lot[i].totalSpaces;
-            // }, 2000)
-
         }
     }
     request.send();
 }
-
-//Questions:
-//1) Allowing capacity to update without refreshing page.
-//2) Having the car name display, once its parked in the lot. Its showing up as Object, object, and I cant get the name. I can only get it written in the console.
-
 
 
 window.addEventListener('load', init);
